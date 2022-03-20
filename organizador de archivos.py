@@ -1,39 +1,47 @@
-import tkinter as tk
-from tkinter import filedialog
+import sys
 import os
 import shutil
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
 
-def organize():
-    folder = filedialog.askdirectory()
-    if not folder:
-        return
+class OrganizerApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("organizador de archivos")
+        self.resize(350, 250)
 
-    extensions = {
-        'imagenes': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.ico'],
-        'documentos': ['.pdf', '.docx', '.txt', '.doc', '.xlsx', '.pptx'],
-        'instaladores': ['.exe', '.msi'],
-        'comprimidos': ['.zip', '.rar', '.7z', '.tar', '.gz']
-    }
+        layout = QVBoxLayout()
 
-    for file in os.listdir(folder):
-        file_path = os.path.join(folder, file)
-        name, ext = os.path.splitext(file)
+        self.btn = QPushButton("elegir carpeta")
+        self.btn.clicked.connect(self.organize)
 
-        category = 'archivos'
-        for cat, exts in extensions.items():
-            if ext in exts:
-                category = cat
-                break
+        layout.addWidget(self.btn)
+        self.setLayout(layout)
 
-        dest_dir = os.path.join(folder, category)
-        os.makedirs(dest_dir, exist_ok=True)
-        shutil.move(file_path, os.path.join(dest_dir, file))
+    def organize(self):
+        folder = input("ingrese la ruta de la carpeta: ")
+        if folder:
+            extensions = {
+                'imagenes': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.ico'],
+                'documentos': ['.pdf', '.docx', '.txt', '.doc', '.xlsx', '.pptx'],
+                'instaladores': ['.exe', '.msi'],
+                'comprimidos': ['.zip', '.rar', '.7z', '.tar', '.gz']
+            }
 
-root = tk.Tk()
-root.title("organizador de archivos")
-root.geometry("300x200")
+            for file in os.listdir(folder):
+                file_path = os.path.join(folder, file)
+                name, ext = os.path.splitext(file)
 
-btn = tk.Button(root, text="elegir carpeta", command=organize)
-btn.pack(pady=50)
+                category = 'archivos'
+                for cat, exts in extensions.items():
+                    if ext in exts:
+                        category = cat
+                        break
 
-root.mainloop()
+                dest_dir = os.path.join(folder, category)
+                os.makedirs(dest_dir, exist_ok=True)
+                shutil.move(file_path, os.path.join(dest_dir, file))
+
+app = QApplication(sys.argv)
+window = OrganizerApp()
+window.show()
+sys.exit(app.exec())
