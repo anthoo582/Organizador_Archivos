@@ -1,7 +1,7 @@
 import sys
 import os
 import shutil
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog
 
 class OrganizerApp(QWidget):
     def __init__(self):
@@ -18,7 +18,7 @@ class OrganizerApp(QWidget):
         self.setLayout(layout)
 
     def organize(self):
-        folder = input("ingrese la ruta de la carpeta: ")
+        folder = QFileDialog.getExistingDirectory(self, "seleccionar carpeta")
         if folder:
             extensions = {
                 'imagenes': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.ico'],
