@@ -1,7 +1,7 @@
 import sys
 import os
 import shutil
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QLabel
 
 class OrganizerApp(QWidget):
     def __init__(self):
@@ -10,16 +10,26 @@ class OrganizerApp(QWidget):
         self.resize(350, 250)
 
         layout = QVBoxLayout()
+        self.title_label = QLabel("organizador de archivos")
+        self.desc_label = QLabel("seleccione alguna carpeta para organizar los archivos")
+        self.info_label = QLabel("los archivos se ordenaran dependiendo de la carpeta que seleccione")
+        self.status_label = QLabel("estado: esperando seleccion de carpeta")
 
         self.btn = QPushButton("elegir carpeta")
         self.btn.clicked.connect(self.organize)
 
+        layout.addWidget(self.title_label)
+        layout.addWidget(self.desc_label)
+        layout.addWidget(self.info_label)
+        layout.addWidget(self.status_label)
         layout.addWidget(self.btn)
         self.setLayout(layout)
 
     def organize(self):
         folder = QFileDialog.getExistingDirectory(self, "seleccionar carpeta")
         if folder:
+            self.status_label.setText("estado: organizando archivos...")
+
             extensions = {
                 'imagenes': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.ico'],
                 'documentos': ['.pdf', '.docx', '.txt', '.doc', '.xlsx', '.pptx'],
@@ -40,6 +50,8 @@ class OrganizerApp(QWidget):
                 dest_dir = os.path.join(folder, category)
                 os.makedirs(dest_dir, exist_ok=True)
                 shutil.move(file_path, os.path.join(dest_dir, file))
+
+            self.status_label.setText("estado: organizacion completada")
 
 app = QApplication(sys.argv)
 window = OrganizerApp()
