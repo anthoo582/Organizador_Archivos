@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFi
 class OrganizerApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("organizador de archivos")
+        self.setWindowTitle("anthony organizador de archivos 2022")
         self.resize(350, 250)
 
         layout = QVBoxLayout()
