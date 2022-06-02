@@ -39,9 +39,10 @@ class OrganizerApp(QWidget):
 
             for file in os.listdir(folder):
                 file_path = os.path.join(folder, file)
-                name, ext = os.path.splitext(file)
+                    name, ext = os.path.splitext(file)
+                    ext = ext.lower()
 
-                category = 'archivos'
+                    category = 'archivos'
                 for cat, exts in extensions.items():
                     if ext in exts:
                         category = cat
