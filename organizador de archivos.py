@@ -34,7 +34,8 @@ class OrganizerApp(QWidget):
                 'imagenes': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.ico'],
                 'documentos': ['.pdf', '.docx', '.txt', '.doc', '.xlsx', '.pptx'],
                 'instaladores': ['.exe', '.msi'],
-                'comprimidos': ['.zip', '.rar', '.7z', '.tar', '.gz']
+                'comprimidos': ['.zip', '.rar', '.7z', '.tar', '.gz'],
+                'musica': ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a', '.wma']
             }
 
             for file in os.listdir(folder):
