@@ -14,6 +14,7 @@ class OrganizerApp(QWidget):
         self.desc_label = QLabel("seleccione alguna carpeta para organizar los archivos")
         self.info_label = QLabel("los archivos se ordenaran dependiendo de la carpeta que seleccione")
         self.status_label = QLabel("estado: esperando seleccion de carpeta")
+        self.folder_label = QLabel("carpeta seleccionada: ninguna")
 
         self.btn = QPushButton("elegir carpeta")
         self.btn.clicked.connect(self.organize)
@@ -22,12 +23,14 @@ class OrganizerApp(QWidget):
         layout.addWidget(self.desc_label)
         layout.addWidget(self.info_label)
         layout.addWidget(self.status_label)
+        layout.addWidget(self.folder_label)
         layout.addWidget(self.btn)
         self.setLayout(layout)
 
     def organize(self):
         folder = QFileDialog.getExistingDirectory(self, "seleccionar carpeta")
         if folder:
+            self.folder_label.setText(f"carpeta seleccionada: {folder}")
             self.status_label.setText("estado: organizando archivos...")
 
             extensions = {
