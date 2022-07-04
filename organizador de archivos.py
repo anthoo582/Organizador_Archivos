@@ -46,6 +46,9 @@ class OrganizerApp(QWidget):
                     name, ext = os.path.splitext(file)
                     ext = ext.lower()
 
+                    if ext == '.lnk':
+                        continue
+
                     category = 'archivos'
                 for cat, exts in extensions.items():
                     if ext in exts:
