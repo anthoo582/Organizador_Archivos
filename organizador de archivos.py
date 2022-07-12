@@ -43,6 +43,7 @@ class OrganizerApp(QWidget):
 
             for file in os.listdir(folder):
                 file_path = os.path.join(folder, file)
+                if os.path.isfile(file_path):
                     name, ext = os.path.splitext(file)
                     ext = ext.lower()
 
@@ -50,14 +51,14 @@ class OrganizerApp(QWidget):
                         continue
 
                     category = 'archivos'
-                for cat, exts in extensions.items():
-                    if ext in exts:
-                        category = cat
-                        break
+                    for cat, exts in extensions.items():
+                        if ext in exts:
+                            category = cat
+                            break
 
-                dest_dir = os.path.join(folder, category)
-                os.makedirs(dest_dir, exist_ok=True)
-                shutil.move(file_path, os.path.join(dest_dir, file))
+                    dest_dir = os.path.join(folder, category)
+                    os.makedirs(dest_dir, exist_ok=True)
+                    shutil.move(file_path, os.path.join(dest_dir, file))
 
             self.status_label.setText("estado: organizacion completada")
 
